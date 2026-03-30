@@ -62,24 +62,24 @@ python -m nxmacro play [-f macro.json] [-l 1] [--speed 1.0]
 
 | Key | Switch button |
 |-----|--------------|
-| `1` | Y |
-| `2` | B |
-| `3` | A |
-| `5` | X |
-| `4` | L |
-| `6` | R |
-| `7` | ZL |
-| `9` | ZR |
-| `-` | MINUS |
-| `+` | PLUS |
+| `M` | A |
+| `L` | B |
+| `O` | X |
+| `K` | Y |
+| `I` | L |
+| `P` | R |
+| `A` | ZL |
+| `E` | ZR |
+| `&` | MINUS |
+| `=` | PLUS |
 | `Z` | D-Up |
 | `S` | D-Down |
 | `Q` | D-Left |
 | `D` | D-Right |
-| `J` | L-Stick click |
-| `K` | R-Stick click |
+| `G` | L-Stick click |
+| `H` | R-Stick click |
 | `Space` | HOME |
-| `Enter` | CAPTURE |
+| `Return` | CAPTURE |
 
 ---
 

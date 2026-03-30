@@ -53,7 +53,6 @@ python -m nxmacro play [-f macro.json] [-l 1] [--speed 1.0]
 |------|---------|-------------|
 | `-f`, `--file` | `macro.json` | Macro file to play |
 | `-l`, `--loop` | `1` | Number of repetitions (`0` = infinite) |
-| `--speed` | `1.0` | Playback speed multiplier |
 
 ---
 

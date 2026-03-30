@@ -57,8 +57,10 @@ def record(host: str, port: int = 6000, filename: Path = Path("macro.json")) -> 
         bot.close()
 
 
-def play(host: str, port: int = 6000, filename: Path = Path("macro.json")):
+def play(host: str, port: int = 6000, loop: int = 1, filename: Path = Path("macro.json")):
+    loop_count = 0
     bot = Bot(host, port)
+
     try:
         bot.connect()
     except (ConnectionRefusedError, TimeoutError, OSError) as e:
@@ -67,32 +69,34 @@ def play(host: str, port: int = 6000, filename: Path = Path("macro.json")):
 
     try:
         bot.release_all()
-
-        start = time.perf_counter()
         macro = Macro.from_json(filename)
         print(f"Loaded macro '{macro.name}' — {len(macro.events)} events")
 
-        for i, event in enumerate(macro.events, 1):
-            target = start + event.timestamp
-            remaining = target - time.perf_counter()
-            if remaining > 0.001:
-                time.sleep(remaining - 0.001)
-            while time.perf_counter() < target:
-                pass
+        while loop == 0 or loop_count < loop:
+            print(f"Starting loop #{loop_count}/{loop}")
+            start = time.perf_counter()
 
-            if isinstance(event, MacroEventButton):
-                bot.send_command(f"{event.action} {event.button}")
-                print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  {event.action} {event.button}")
+            for i, event in enumerate(macro.events, 1):
+                target = start + event.timestamp
+                remaining = target - time.perf_counter()
+                if remaining > 0.001:
+                    time.sleep(remaining - 0.001)
+                while time.perf_counter() < target:
+                    pass
 
-            elif isinstance(event, MacroEventStick):
-                bot.send_command(f"{event.action} {event.stick} {event.x} {event.y}")
-                print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  {event.action} {event.stick} ({event.x}, {event.y})")
+                if isinstance(event, MacroEventButton):
+                    bot.send_command(f"{event.action} {event.button}")
+                    print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  {event.action} {event.button}")
 
-            else:
-                print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  Skipping unknown event")
-                continue
+                elif isinstance(event, MacroEventStick):
+                    bot.send_command(f"{event.action} {event.stick} {event.x} {event.y}")
+                    print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  {event.action} {event.stick} ({event.x}, {event.y})")
 
-        print(f"Macro completed in {time.perf_counter() - start:.3f}s")
+                else:
+                    print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  Skipping unknown event")
+                    continue
+
+            print(f"Macro completed in {time.perf_counter() - start:.3f}s")
     finally:
         bot.release_all()
         bot.close()

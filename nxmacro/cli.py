@@ -23,8 +23,6 @@ def cli() -> Namespace:
                              help="Input .json macro file (default: macro.json)")
     play_parser.add_argument("-l", "--loop", type=int, default=1,
                              help="Repetitions (0 = infinite, default: 1)")
-    play_parser.add_argument("--speed", type=float, default=1.0,
-                             help="Playback speed multiplier (default: 1.0)")
  
     args = parser.parse_args()
 

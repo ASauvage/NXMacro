@@ -12,20 +12,10 @@ BUTTONS = [
 STICKS = ["LEFT", "RIGHT"]
 
 KEY_MAP = {
-    "6": "A",
-    "5": "B",
-    "8": "X",
-    "4": "Y",
-    "a": "L",
-    "e": "R",
-    "7": "ZL",
-    "9": "ZR",
-    "z": "DUP",
-    "s": "DDOWN",
-    "q": "DLEFT",
-    "d": "DRIGHT",
-    "&": "PLUS",
-    "é": "MINUS",
-    "j": "LSTICK",
-    "k": "RSTICK",
+    "3": "A", "2": "B", "5": "X", "1": "Y",
+    "4": "L", "6": "R", "7": "ZL", "9": "ZR",
+    "-": "MINUS", "+": "PLUS",
+    "return": "CAPTURE", "space": "HOME",
+    "q": "DLEFT", "d": "DRIGHT", "z": "DUP", "s": "DDOWN",
+    "j": "LSTICK", "k": "RSTICK"
 }

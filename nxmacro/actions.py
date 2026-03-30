@@ -1,6 +1,5 @@
 import keyboard
 import time
-import json
 from pathlib import Path
 
 from .config import KEY_MAP
@@ -10,7 +9,11 @@ from .macro import Macro, MacroEventButton, MacroEventStick
 
 def record(host: str, port: int = 6000, filename: Path = Path("macro.json")) -> None:
     bot = Bot(host, port)
-    bot.connect()
+    try:
+        bot.connect()
+    except (ConnectionRefusedError, TimeoutError, OSError) as e:
+        print(f"Error: {e}")
+        return
 
     try:
         bot.release_all()
@@ -56,7 +59,11 @@ def record(host: str, port: int = 6000, filename: Path = Path("macro.json")) -> 
 
 def play(host: str, port: int = 6000, filename: Path = Path("macro.json")):
     bot = Bot(host, port)
-    bot.connect()
+    try:
+        bot.connect()
+    except (ConnectionRefusedError, TimeoutError, OSError) as e:
+        print(f"Error: {e}")
+        return
 
     try:
         bot.release_all()
@@ -84,7 +91,7 @@ def play(host: str, port: int = 6000, filename: Path = Path("macro.json")):
             else:
                 print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  Skipping unknown event")
                 continue
-            
+
         print(f"Macro completed in {time.perf_counter() - start:.3f}s")
     finally:
         bot.release_all()

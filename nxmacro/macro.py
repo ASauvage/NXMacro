@@ -28,7 +28,7 @@ class MacroEventButton(MacroEvent):
 
 @dataclass
 class MacroEventStick(MacroEvent):
-    action: Literal["setStick", "resetStick"]
+    action: Literal["setStick"]
     stick: Literal["LEFT", "RIGHT"]
     x: int
     y: int
@@ -45,8 +45,8 @@ class MacroEventStick(MacroEvent):
  
 @dataclass
 class Macro:
-    name: str = "unnamed"
-    created: datetime = datetime.now()
+    name: str = field(default="unnamed")
+    created: datetime = field(default_factory=datetime.now)
     events: list[MacroEvent | MacroEventButton | MacroEventStick] = field(default_factory=list)
  
     def as_dict(self) -> dict:

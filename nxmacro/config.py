@@ -1,5 +1,12 @@
 
 
+def print_bindings() -> None:
+    print("Key bindings:")
+    for key, btn in KEY_MAP.items():
+        print(f"  {key:<10} → {btn}")
+    print()
+
+
 BUTTONS = [
     "A", "B", "X", "Y",
     "L", "R", "ZL", "ZR",

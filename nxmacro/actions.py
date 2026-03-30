@@ -1,13 +1,14 @@
-import keyboard
 import time
 from pathlib import Path
 
-from .config import KEY_MAP
+from .config import KEY_MAP, print_bindings
 from .bot import Bot
 from .macro import Macro, MacroEventButton, MacroEventStick
 
 
 def record(host: str, port: int = 6000, filename: Path = Path("macro.json")) -> None:
+    import keyboard
+
     bot = Bot(host, port)
     try:
         bot.connect()
@@ -18,6 +19,7 @@ def record(host: str, port: int = 6000, filename: Path = Path("macro.json")) -> 
     try:
         bot.release_all()
 
+        print_bindings()
         print("\nF9 = start  |  F10 = stop & save\n")
         keyboard.wait("f9")
 
@@ -96,6 +98,7 @@ def play(host: str, port: int = 6000, loop: int = 1, filename: Path = Path("macr
                     print(f"  [{i}/{len(macro.events)}] {event.timestamp:.3f}s  Skipping unknown event")
                     continue
 
+            loop_count += 1
             print(f"Macro completed in {time.perf_counter() - start:.3f}s")
     finally:
         bot.release_all()
